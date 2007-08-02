@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.3.5
-%define release	%mkrel 2
+%define version	0.4.0
+%define release	%mkrel 1
 
 Summary: 	A full-featured personal photo management application for the GNOME desktop
 Name: 		%{name}
@@ -116,6 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README TODO
 %_bindir/%name
 %_bindir/%name-import
+%_bindir/%name-sqlite-upgrade
 %dir %_libexecdir/gnome-screensaver/
 %_libexecdir/gnome-screensaver/f-spot-screensaver
 %_libdir/%name
@@ -125,7 +126,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %_datadir/omf/*/
 %_datadir/omf/*/*-C.omf
 %_libdir/pkgconfig/*.pc
-%_datadir/icons/hicolor/*/apps/f-spot*
+%_datadir/f-spot
+%_datadir/icons/hicolor/*/*/*
 %_menudir/%name
 %_liconsdir/%name.png
 %_iconsdir/%name.png
