@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.0
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary: 	A full-featured personal photo management application for the GNOME desktop
 Name: 		%{name}
@@ -22,6 +22,7 @@ BuildRequires: 	libgphoto-devel
 BuildRequires: 	perl-XML-Parser
 BuildRequires: 	desktop-file-utils
 BuildRequires: 	scrollkeeper gnome-doc-utils libxslt-proc
+BuildRequires: 	ndesk-dbus-glib
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 #gw please don't drop these explicit deps, the shared libraries are imported
 Requires: 	%mklibname exif 12
@@ -38,6 +39,8 @@ for the GNOME desktop
 %prep
 %setup -q
 %patch -p1 -b .dllmap
+cp %_prefix/lib/mono/ndesk-dbus-1.0/*.dll dbus-sharp
+cp %_prefix/lib/mono/ndesk-dbus-glib-1.0/*.dll dbus-sharp-glib
 
 %build
 %configure2_5x --disable-scrollkeeper
@@ -95,6 +98,9 @@ mkdir -p %buildroot{%_liconsdir,%_miconsdir}
 ln -s %_datadir/icons/hicolor/48x48/apps/%name.png %buildroot%_liconsdir/%name.png
 ln -s %_datadir/icons/hicolor/32x32/apps/%name.png %buildroot%_iconsdir/%name.png
 ln -s %_datadir/icons/hicolor/16x16/apps/%name.png %buildroot%_miconsdir/%name.png
+
+#gw now in external package
+rm -f %_libdir/f-spot/NDesk.DBus*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
