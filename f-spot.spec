@@ -100,7 +100,7 @@ ln -s %_datadir/icons/hicolor/32x32/apps/%name.png %buildroot%_iconsdir/%name.pn
 ln -s %_datadir/icons/hicolor/16x16/apps/%name.png %buildroot%_miconsdir/%name.png
 
 #gw now in external package
-rm -f %_libdir/f-spot/NDesk.DBus*
+rm -f %buildroot%_libdir/f-spot/NDesk.DBus*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
