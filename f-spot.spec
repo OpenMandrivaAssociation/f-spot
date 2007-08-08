@@ -50,36 +50,6 @@ cp %_prefix/lib/mono/ndesk-dbus-glib-1.0/*.dll dbus-sharp-glib
 rm -rf $RPM_BUILD_ROOT %name.lang
 %makeinstall_std saverdir=%_libdir/gnome-screensaver/
 rm -f %buildroot%_libdir/%name/libfspot*a
-#menu
-install -d -m 755 $RPM_BUILD_ROOT%{_menudir}
-cat >$RPM_BUILD_ROOT%{_menudir}/%{name} <<EOF
-?package(%{name}): \
-	command="%{_bindir}/%{name}" \
-	needs="X11" \
-	section="Multimedia/Graphics" \
-	icon="%name.png" \
-	title="F-Spot" \
-	longtitle="Image Database" \
-	startup_notify="true" xdg="true"
-?package(%{name}): \
-	command="%{_bindir}/%{name} --view" \
-	needs="KDE" \
-	section=".hidden" \
-	icon="%name.png" \
-	title="F-Spot" \
-	longtitle="Image Viewer and Database" \
-	startup_notify="false" accept_url="true" multiple_files="true" \
-	mimetypes="image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-gray;image/x-icb;image/x-ico;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-xbitmap;image/x-xpixmap;image/x-pcx;image/x-dcraw"  xdg="true"
-?package(%{name}): \
-command="%{_bindir}/%{name} --view" \
-	needs="GNOME" \
-	section=".hidden" \
-	icon="%name.png" \
-	title="F-Spot" \
-	longtitle="Image Viewer and Database" \
-	startup_notify="false" accept_url="true" multiple_files="true" \
-	mimetypes="image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-gray;image/x-icb;image/x-ico;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-xbitmap;image/x-xpixmap;image/x-pcx;image/x-dcraw"  xdg="true"
-EOF
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --remove-category="Photograph" \
@@ -134,9 +104,6 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/pkgconfig/*.pc
 %_datadir/f-spot
 %_datadir/icons/hicolor/*/*/*
-%_menudir/%name
 %_liconsdir/%name.png
 %_iconsdir/%name.png
 %_miconsdir/%name.png
-
-
