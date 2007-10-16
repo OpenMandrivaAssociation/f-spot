@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.0
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 Summary: 	A full-featured personal photo management application for the GNOME desktop
 Name: 		%{name}
@@ -8,6 +8,7 @@ Version: 	%{version}
 Release: 	%{release}
 Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch: f-spot-0.3.2-dllmap.patch
+Patch1: f-spot-0.4.0-sqlite3-update.patch
 License: 	GPL
 Group: 		Graphics
 Url: 		http://f-spot.org/
@@ -24,6 +25,8 @@ BuildRequires: 	desktop-file-utils
 BuildRequires: 	scrollkeeper gnome-doc-utils libxslt-proc
 BuildRequires: 	ndesk-dbus-glib
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+#gw required for the upgrade script
+Requires: sqlite-tools sqlite3-tools
 #gw please don't drop these explicit deps, the shared libraries are imported
 Requires: 	%mklibname exif 12
 Requires: 	%mklibname gphoto 2
@@ -39,6 +42,7 @@ for the GNOME desktop
 %prep
 %setup -q
 %patch -p1 -b .dllmap
+%patch1 -p1 -b .sqlite3-update
 cp %_prefix/lib/mono/ndesk-dbus-1.0/*.dll dbus-sharp
 cp %_prefix/lib/mono/ndesk-dbus-glib-1.0/*.dll dbus-sharp-glib
 
