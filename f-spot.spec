@@ -17,7 +17,7 @@ BuildRequires: 	mono-devel
 BuildRequires: 	mono-data-sqlite
 BuildRequires: 	libgnomeui2-devel
 BuildRequires: 	libexif-devel
-BuildRequires: 	liblcms-devel
+BuildRequires: 	lcms-devel
 BuildRequires: 	sqlite-devel
 BuildRequires: 	libgphoto-devel
 BuildRequires: 	perl-XML-Parser
