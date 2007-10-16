@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.0
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Summary: 	A full-featured personal photo management application for the GNOME desktop
 Name: 		%{name}
@@ -24,6 +24,8 @@ BuildRequires: 	perl-XML-Parser
 BuildRequires: 	desktop-file-utils
 BuildRequires: 	scrollkeeper gnome-doc-utils libxslt-proc
 BuildRequires: 	ndesk-dbus-glib
+#gw this is needed for automatic mono deps
+BuildRequires: libmesaglu-devel
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 #gw required for the upgrade script
 Requires: sqlite-tools sqlite3-tools
