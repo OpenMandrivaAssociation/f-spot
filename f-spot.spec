@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.0
-%define release	%mkrel 4
+%define release	%mkrel 5
 
 Summary: 	A full-featured personal photo management application for the GNOME desktop
 Name: 		%{name}
@@ -56,10 +56,9 @@ cp %_prefix/lib/mono/ndesk-dbus-glib-1.0/*.dll dbus-sharp-glib
 rm -rf $RPM_BUILD_ROOT %name.lang
 %makeinstall_std saverdir=%_libdir/gnome-screensaver/
 rm -f %buildroot%_libdir/%name/libfspot*a
-desktop-file-install --vendor="" \
+desktop-file-install \
   --remove-category="Application" \
-  --remove-category="Photograph" \
-  --add-category="X-MandrivaLinux-Multimedia-Graphics" \
+  --remove-category="Photography" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 
