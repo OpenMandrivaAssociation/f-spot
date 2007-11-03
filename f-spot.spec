@@ -9,6 +9,9 @@ Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.0-sqlite3-update.patch
+# gw: Ubuntu patch with several fixes from svn:
+# b.g.o #463789 b.g.o #462939 b.g.o #462069 bgo #464981 bgo #463690
+Patch2: http://archive.ubuntu.com/ubuntu/pool/main/f/f-spot/f-spot_0.4.0-0ubuntu3.diff.gz
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -55,8 +58,7 @@ Features:
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
-cp %_prefix/lib/mono/ndesk-dbus-1.0/*.dll dbus-sharp
-cp %_prefix/lib/mono/ndesk-dbus-glib-1.0/*.dll dbus-sharp-glib
+%patch2 -p1 -b .ubuntu
 
 %build
 %configure2_5x \
@@ -79,9 +81,6 @@ mkdir -p %buildroot{%_liconsdir,%_miconsdir}
 ln -s %_datadir/icons/hicolor/48x48/apps/%name.png %buildroot%_liconsdir/%name.png
 ln -s %_datadir/icons/hicolor/32x32/apps/%name.png %buildroot%_iconsdir/%name.png
 ln -s %_datadir/icons/hicolor/16x16/apps/%name.png %buildroot%_miconsdir/%name.png
-
-#gw now in external package
-rm -f %buildroot%_libdir/f-spot/NDesk.DBus*
 
 %clean
 rm -rf %{buildroot}
