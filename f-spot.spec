@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.0
-%define release	%mkrel 5
+%define release	%mkrel 6
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -10,11 +10,12 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.0-sqlite3-update.patch
 # gw: Ubuntu patch with several fixes from svn:
-# b.g.o #463789 b.g.o #462939 b.g.o #462069 bgo #464981 bgo #463690
-Patch2: http://archive.ubuntu.com/ubuntu/pool/main/f/f-spot/f-spot_0.4.0-0ubuntu3.diff.gz
+# b.g.o #463789 b.g.o #462939 b.g.o #462069 bgo #464981 bgo #463690 novell bug #304124
+Patch2: 	f-spot-0.4.0-svnfixes.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
+BuildRequires:  intltool
 BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
@@ -58,7 +59,11 @@ Features:
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
-%patch2 -p1 -b .ubuntu
+%patch2 -p1 -b .svnfixes
+
+#needed by patch2
+intltoolize --copy --force
+autoreconf
 
 %build
 %configure2_5x \
