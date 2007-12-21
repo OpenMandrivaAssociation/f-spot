@@ -38,6 +38,7 @@ Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
 #gw workaround for urpmi bug 29356
 %define _provides_exceptions mono.libgphoto2-sharp
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 F-Spot is a full-featured personal photo management application
