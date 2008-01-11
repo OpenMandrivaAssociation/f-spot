@@ -96,7 +96,7 @@ rm -rf %{buildroot}
 
 %files -f %name.lang
 %defattr(-,root,root)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS README TODO
+%doc AUTHORS MAINTAINERS NEWS README TODO
 %_bindir/%name
 %_bindir/%name-import
 %_bindir/%name-sqlite-upgrade
