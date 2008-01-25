@@ -9,11 +9,14 @@ Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.0-sqlite3-update.patch
+Patch2: f-spot-0.4.1-gtkhtml-sharp-3.14.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
 BuildRequires:  intltool
 BuildRequires:	gnome-sharp2 >= 2.8.0
+BuildRequires:	gnome-desktop-sharp
+BuildRequires:	beagle
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
 BuildRequires:	libgnomeui2-devel
@@ -56,6 +59,9 @@ Features:
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
+%patch2 -p1
+autoconf
+automake
 
 %build
 %configure2_5x \
