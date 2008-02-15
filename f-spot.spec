@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.4.1
-%define release	%mkrel 3
+%define version	0.4.2
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -8,8 +8,8 @@ Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
-Patch1:		f-spot-0.4.0-sqlite3-update.patch
-Patch2: f-spot-0.4.1-gtkhtml-sharp-3.14.patch
+Patch1:		f-spot-0.4.2-sqlite3-update.patch
+Patch2: f-spot-0.4.2-gtkhtml-sharp-3.14.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -59,19 +59,22 @@ Features:
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
-%patch2 -p1
+%patch2 -p1 -b .gtkhtml-sharp-3.14
 autoconf
-automake
 
 %build
 %configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
-%make
+#gw disabled parallel build in 0.4.2
+make
 
 %install
 rm -rf %{buildroot} %name.lang
-%makeinstall_std saverdir=%_libdir/gnome-screensaver/
+%makeinstall_std saverdir=%_libdir/gnome-screensaver/ plugindir=%buildroot%_libdir/f-spot/extensions
+#gw broken makefile
+mv %buildroot%buildroot%_libdir/f-spot/extensions/ %buildroot%_libdir/f-spot/
+
 rm -f %buildroot%_libdir/%name/libfspot*a
 
 %find_lang %name --with-gnome
