@@ -40,7 +40,7 @@ Requires:	%mklibname gphoto 2
 Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
 #gw workaround for urpmi bug 29356
-%define _provides_exceptions mono.libgphoto2-sharp\\|mono.Mono.Addins
+%define _provides_exceptions mono.libgphoto2-sharp\\|mono.Mono.Addins\\|mono.gnome-keyring-sharp
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
