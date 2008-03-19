@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.2
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -10,6 +10,7 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
 Patch2: f-spot-0.4.2-gtkhtml-sharp-3.14.patch
+Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -60,6 +61,7 @@ Features:
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
 %patch2 -p1 -b .gtkhtml-sharp-3.14
+%patch3 -p1
 autoconf
 
 %build
