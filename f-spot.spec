@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.2
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -17,7 +17,9 @@ Url:		http://f-spot.org
 BuildRequires:  intltool
 BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	gnome-desktop-sharp
-BuildRequires:	beagle
+#gw reenable this once it becomes an extension:
+# http://bugzilla.gnome.org/show_bug.cgi?id=507095
+#BuildRequires:	beagle
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
 BuildRequires:	libgnomeui2-devel
