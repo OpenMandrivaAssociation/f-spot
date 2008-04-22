@@ -17,8 +17,13 @@ License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
 BuildRequires:  intltool
+%if %mdvver >= 200900
 BuildRequires:	gnome-sharp2-devel >= 2.8.0
 BuildRequires:	gnome-desktop-sharp-devel
+%else
+BuildRequires:	gnome-sharp2 >= 2.8.0
+BuildRequires:	gnome-desktop-sharp
+%endif
 #gw reenable this once it becomes an extension:
 # http://bugzilla.gnome.org/show_bug.cgi?id=507095
 #BuildRequires:	beagle
