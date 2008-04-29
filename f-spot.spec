@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.4.2
-%define release	%mkrel 6
+%define version	0.4.3
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -9,10 +9,7 @@ Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
-Patch2: f-spot-0.4.2-gtkhtml-sharp-3.14.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
-#gw fix database upgrade from v8 (bug #40146)
-Patch4: f-spot-r3748-database-upgrade.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -67,20 +64,13 @@ Features:
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
-%patch2 -p1 -b .gtkhtml-sharp-3.14
 %patch3 -p1
-%patch4 -p0
-intltoolize --force
-aclocal
-autoconf
-automake
 
 %build
 %configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
-#gw disabled parallel build in 0.4.2
-make
+%make
 
 %install
 rm -rf %{buildroot} %name.lang
@@ -126,6 +116,7 @@ rm -rf %{buildroot}
 %_libexecdir/gnome-screensaver/f-spot-screensaver
 %_libdir/%name
 %_datadir/applications/%name.desktop
+%_datadir/applications/%name-import.desktop
 %_datadir/applications/%name-view.desktop
 %_datadir/applications/screensavers/f-spot-screensaver.desktop
 %dir %_datadir/omf/*/
