@@ -1,12 +1,13 @@
 %define name 	f-spot
 %define version	0.4.3.1
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
+Source1:	f-spot-48.png
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
@@ -85,6 +86,8 @@ for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do
 echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
 done
 
+mkdir -p %buildroot%_datadir/icons/hicolor/48x48/apps/
+cp %{SOURCE1} %buildroot%_datadir/icons/hicolor/48x48/apps/%name.png
 
 mkdir -p %buildroot{%_liconsdir,%_miconsdir}
 ln -s %_datadir/icons/hicolor/48x48/apps/%name.png %buildroot%_liconsdir/%name.png
