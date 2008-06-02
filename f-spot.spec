@@ -7,7 +7,6 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-Source1:	f-spot-48.png
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
@@ -66,8 +65,14 @@ Features:
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
 %patch3 -p1
+intltoolize --force
+aclocal
+autoconf
+automake
 
 %build
+#gw TODO: fix build without this
+%define _disable_ld_no_undefined 1
 %configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
@@ -75,9 +80,7 @@ Features:
 
 %install
 rm -rf %{buildroot} %name.lang
-%makeinstall_std saverdir=%_libdir/gnome-screensaver/ plugindir=%buildroot%_libdir/f-spot/extensions
-#gw broken makefile
-mv %buildroot%buildroot%_libdir/f-spot/extensions/ %buildroot%_libdir/f-spot/
+%makeinstall saverdir=%buildroot%_libdir/gnome-screensaver/ plugindir=%buildroot%_libdir/f-spot/extensions themesdir=%buildroot%_datadir/applications/screensavers
 
 rm -f %buildroot%_libdir/%name/libfspot*a
 
@@ -85,14 +88,6 @@ rm -f %buildroot%_libdir/%name/libfspot*a
 for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
 echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
 done
-
-mkdir -p %buildroot%_datadir/icons/hicolor/48x48/apps/
-cp %{SOURCE1} %buildroot%_datadir/icons/hicolor/48x48/apps/%name.png
-
-mkdir -p %buildroot{%_liconsdir,%_miconsdir}
-ln -s %_datadir/icons/hicolor/48x48/apps/%name.png %buildroot%_liconsdir/%name.png
-ln -s %_datadir/icons/hicolor/32x32/apps/%name.png %buildroot%_iconsdir/%name.png
-ln -s %_datadir/icons/hicolor/16x16/apps/%name.png %buildroot%_miconsdir/%name.png
 
 %clean
 rm -rf %{buildroot}
@@ -125,8 +120,6 @@ rm -rf %{buildroot}
 %dir %_datadir/omf/*/
 %_datadir/omf/*/*-C.omf
 %_libdir/pkgconfig/*.pc
+%_libdir/gio-sharp-unstable
 %_datadir/f-spot
 %_iconsdir/hicolor/*/*/*
-%_liconsdir/%name.png
-%_iconsdir/%name.png
-%_miconsdir/%name.png
