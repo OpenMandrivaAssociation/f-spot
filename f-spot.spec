@@ -78,7 +78,8 @@ automake
 %configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
-%make
+#gw, parallel make fails in 0.4.4
+make
 
 %install
 rm -rf %{buildroot} %name.lang
