@@ -97,7 +97,8 @@ autoreconf
 %configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
-%make
+#parallel build is broken
+make
 
 %install
 rm -rf %{buildroot} %name.lang
