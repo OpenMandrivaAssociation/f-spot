@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.4
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -11,6 +11,18 @@ Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
 Patch2:		f-spot-0.4.4-deprecated.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
+# (fc) 0.4.4-4mdv add x-content mimetype (Fedora)
+Patch4: 	x-content.patch
+# (fc) 0.4.4-4mdv allow usage of DESTDIR (Fedora, SVN)
+Patch5:		f-spot-0.4.4-destdir.patch
+# (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
+Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
+# (fc) 0.4.4-4mdv fix underlinking (Debian)
+Patch7:		f-spot-0.4.4-fixunderlinking.patch
+# (fc) 0.4.4-4mdv don't link with nunit (Debian)
+Patch8:		f-spot-0.4.4-no-nunit.patch
+# (fc) 0.4.4-4mdv don't complain if beagle is not installed
+Patch9:		f-spot-0.4.4-nobeagle.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -18,6 +30,7 @@ BuildRequires:  intltool
 %if %mdvver >= 200900
 BuildRequires:	gnome-sharp2-devel >= 2.8.0
 BuildRequires:	gnome-desktop-sharp-devel
+BuildRequires:  gnome-keyring-sharp
 %else
 BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	gnome-desktop-sharp
@@ -35,6 +48,7 @@ BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
 BuildRequires:	ndesk-dbus-glib
+BuildRequires:  gnome-screensaver
 #gw this is needed for automatic mono deps
 BuildRequires:	libmesaglu-devel
 #gw required for the upgrade script
@@ -65,25 +79,29 @@ Features:
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
-%patch2 -p1
-%patch3 -p1
+%patch2 -p1 -b .deprecated
+%patch3 -p1 -b .multiplefile
+%patch4 -p1 -b .x-content
+%patch5 -p1 -b .destdir
+%if %{mdkversion} >= 200900
+%patch6 -p1 -b .gnome-keyring-sharp
+%endif
+%patch7 -p1 -b .fixunderlinking
+%patch8 -p1 -b .no-nunit
+%patch9 -p1 -b .nobeagle
+
 intltoolize --force
-aclocal
-autoconf
-automake
+autoreconf
 
 %build
-#gw TODO: fix build without this
-%define _disable_ld_no_undefined 1
 %configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
-#gw, parallel make fails in 0.4.4
-make
+%make
 
 %install
 rm -rf %{buildroot} %name.lang
-%makeinstall saverdir=%buildroot%_libdir/gnome-screensaver/ plugindir=%buildroot%_libdir/f-spot/extensions themesdir=%buildroot%_datadir/applications/screensavers
+%makeinstall_std
 
 rm -f %buildroot%_libdir/%name/libfspot*a
 
