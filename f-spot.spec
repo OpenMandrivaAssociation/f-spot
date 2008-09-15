@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.4.4
-%define release	%mkrel 4
+%define release	%mkrel 5
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -23,6 +23,8 @@ Patch7:		f-spot-0.4.4-fixunderlinking.patch
 Patch8:		f-spot-0.4.4-no-nunit.patch
 # (fc) 0.4.4-4mdv don't complain if beagle is not installed
 Patch9:		f-spot-0.4.4-nobeagle.patch
+# (fc) 0.4.4-5mdv fix random crash (GNOME bug #552272)
+Patch10:	f-spot-0.4.4-fixratingcrash.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -89,6 +91,7 @@ Features:
 %patch7 -p1 -b .fixunderlinking
 %patch8 -p1 -b .no-nunit
 %patch9 -p1 -b .nobeagle
+%patch10 -p1 -b .fixratingcrash
 
 intltoolize --force
 autoreconf
