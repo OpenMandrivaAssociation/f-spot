@@ -147,7 +147,7 @@ rm -rf %{buildroot}
 %dir %_libdir/%name
 %_libdir/%name/*.dll*
 %_libdir/%name/*.exe*
-%_libdir/%name/lib*.so.*
+%_libdir/%name/lib*.so*
 %_libdir/%name/*.addins
 %dir %_libdir/%name/extensions
 %_libdir/%name/extensions/CDExport.dll
