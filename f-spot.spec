@@ -41,7 +41,6 @@ BuildRequires:	libexif-devel
 BuildRequires:	lcms-devel
 BuildRequires:	sqlite-devel
 BuildRequires:	libgphoto-devel
-BuildRequires:	perl(XML::Parser)
 BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
@@ -72,6 +71,16 @@ Features:
 * Tag icon editor
 * Create photo cd
 * Export to web
+
+%package beagle
+Summary: Beagle notifyer for F-Spot
+Group: Graphics
+Requires: beagle
+Requires: %name = %version
+
+%description beagle
+This F-Spot extension improves the photo indexing by the beagle desktop search.
+
 
 %prep
 %setup -q
@@ -135,7 +144,27 @@ rm -rf %{buildroot}
 %_bindir/%name-sqlite-upgrade
 %dir %_libexecdir/gnome-screensaver/
 %_libexecdir/gnome-screensaver/f-spot-screensaver
-%_libdir/%name
+%dir %_libdir/%name
+%_libdir/%name/*.dll*
+%_libdir/%name/*.exe*
+%_libdir/%name/lib*.so.*
+%_libdir/%name/*.addins
+%dir %_libdir/%name/extensions
+%_libdir/%name/extensions/CDExport.dll
+%_libdir/%name/extensions/ChangePhotoPath.dll
+%_libdir/%name/extensions/DBusService.dll
+%_libdir/%name/extensions/DefaultExporters.addin.xml
+%_libdir/%name/extensions/DevelopInUFRaw.dll
+%_libdir/%name/extensions/FacebookExport.dll
+%_libdir/%name/extensions/FlickrExport.dll
+%_libdir/%name/extensions/FolderExport.dll
+%_libdir/%name/extensions/GalleryExport.dll
+%_libdir/%name/extensions/MergeDb.dll
+%_libdir/%name/extensions/PicasaWebExport.dll
+%_libdir/%name/extensions/RawPlusJpeg.dll
+%_libdir/%name/extensions/SmugMugExport.dll
+%_libdir/%name/extensions/TabbloExport.dll
+%_libdir/%name/extensions/ZipExport.dll
 %_datadir/applications/%name.desktop
 %_datadir/applications/%name-import.desktop
 %_datadir/applications/%name-view.desktop
@@ -146,3 +175,7 @@ rm -rf %{buildroot}
 %_libdir/gio-sharp-unstable
 %_datadir/f-spot
 %_iconsdir/hicolor/*/*/*
+
+%files beagle
+%defattr(-,root,root)
+%_libdir/%name/extensions/BeagleService.dll
