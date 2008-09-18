@@ -19,6 +19,8 @@ Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
 Patch7:		f-spot-0.4.4-fixunderlinking.patch
 # (fc) 0.4.4-4mdv allow to disable nunit 
 Patch8:		f-spot-0.5.0-no-nunit.patch
+# (fc) 0.5.0-1mdv fix sidebar border (Stephane Delcroix)
+Patch9:		f-spot-0.5.0-sidebarborder.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -83,6 +85,7 @@ Features:
 %endif
 %patch7 -p1 -b .fixunderlinking
 %patch8 -p1 -b .no-nunit
+%patch9 -p1 -b .sidebarborder
 
 intltoolize --force
 autoreconf
