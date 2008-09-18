@@ -1,5 +1,5 @@
 %define name 	f-spot
-%define version	0.4.4
+%define version	0.5.0
 %define release	%mkrel 5
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
@@ -13,18 +13,12 @@ Patch2:		f-spot-0.4.4-deprecated.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
 # (fc) 0.4.4-4mdv add x-content mimetype (Fedora)
 Patch4: 	x-content.patch
-# (fc) 0.4.4-4mdv allow usage of DESTDIR (Fedora, SVN)
-Patch5:		f-spot-0.4.4-destdir.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
 Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
 Patch7:		f-spot-0.4.4-fixunderlinking.patch
-# (fc) 0.4.4-4mdv don't link with nunit (Debian)
-Patch8:		f-spot-0.4.4-no-nunit.patch
-# (fc) 0.4.4-4mdv don't complain if beagle is not installed
-Patch9:		f-spot-0.4.4-nobeagle.patch
-# (fc) 0.4.4-5mdv fix random crash (GNOME bug #552272)
-Patch10:	f-spot-0.4.4-fixratingcrash.patch
+# (fc) 0.4.4-4mdv allow to disable nunit 
+Patch8:		f-spot-0.5.0-no-nunit.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -84,20 +78,17 @@ Features:
 %patch2 -p1 -b .deprecated
 %patch3 -p1 -b .multiplefile
 %patch4 -p1 -b .x-content
-%patch5 -p1 -b .destdir
 %if %{mdkversion} >= 200900
 %patch6 -p1 -b .gnome-keyring-sharp
 %endif
 %patch7 -p1 -b .fixunderlinking
 %patch8 -p1 -b .no-nunit
-%patch9 -p1 -b .nobeagle
-%patch10 -p1 -b .fixratingcrash
 
 intltoolize --force
 autoreconf
 
 %build
-%configure2_5x \
+%configure2_5x --disable-nunit \
 	--disable-scrollkeeper \
 	--disable-static
 #parallel build is broken
