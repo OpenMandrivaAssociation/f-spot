@@ -44,6 +44,7 @@ BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
 BuildRequires:	ndesk-dbus-glib
 BuildRequires:  gnome-screensaver
+BuildRequires:  gettext-devel
 #gw this is needed for automatic mono deps
 BuildRequires:	libmesaglu-devel
 #gw required for the upgrade script
