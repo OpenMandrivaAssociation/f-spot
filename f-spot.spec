@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.5.0
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -11,8 +11,6 @@ Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
 Patch2:		f-spot-0.4.4-deprecated.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
-# (fc) 0.4.4-4mdv add x-content mimetype (Fedora)
-Patch4: 	x-content.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
 Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
@@ -88,7 +86,6 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %patch1 -p1 -b .sqlite3-update
 %patch2 -p1 -b .deprecated
 %patch3 -p1 -b .multiplefile
-%patch4 -p1 -b .x-content
 %if %{mdkversion} >= 200900
 %patch6 -p1 -b .gnome-keyring-sharp
 %endif
