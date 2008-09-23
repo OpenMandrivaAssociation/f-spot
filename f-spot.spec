@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.5.0
-%define release	%mkrel 2
+%define version	0.5.0.1
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -15,10 +15,6 @@ Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
 Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
 Patch7:		f-spot-0.4.4-fixunderlinking.patch
-# (fc) 0.4.4-4mdv allow to disable nunit 
-Patch8:		f-spot-0.5.0-no-nunit.patch
-# (fc) 0.5.0-1mdv fix sidebar border (Stephane Delcroix)
-Patch9:		f-spot-0.5.0-sidebarborder.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -91,8 +87,6 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %patch6 -p1 -b .gnome-keyring-sharp
 %endif
 %patch7 -p1 -b .fixunderlinking
-%patch8 -p1 -b .no-nunit
-%patch9 -p1 -b .sidebarborder
 
 intltoolize --force
 autoreconf
