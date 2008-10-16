@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.5.0.2
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
