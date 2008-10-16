@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.5.0.2
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -11,7 +11,13 @@ Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.4.2-sqlite3-update.patch
 Patch2:		f-spot-0.4.4-deprecated.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
+# gw fix camera selection dialog showing three instead of one camera
+# http://bugzilla.gnome.org/show_bug.cgi?id=551803
 Patch4: f-spot-0.5.0.2-fix-bogus-camera-selection-dialog.patch
+# gw from this upstream bug, fix crash when clicking on edit with no image
+# in the collection
+# http://bugzilla.gnome.org/show_bug.cgi?id=556395
+Patch5: f-spot-0.5.0.2-no-image-in-collection-crash-fix.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
 Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
@@ -85,6 +91,7 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %patch2 -p1 -b .deprecated
 %patch3 -p1 -b .multiplefile
 %patch4 -p1
+%patch5
 %if %{mdkversion} >= 200900
 %patch6 -p1 -b .gnome-keyring-sharp
 %endif
