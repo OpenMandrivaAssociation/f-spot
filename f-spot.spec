@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.5.0.2
-%define release	%mkrel 4
+%define version	0.5.0.3
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -98,6 +98,7 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %patch7 -p1 -b .fixunderlinking
 
 intltoolize --force
+libtoolize --copy --force
 autoreconf
 
 %build
@@ -160,6 +161,7 @@ rm -rf %{buildroot}
 %_libdir/%name/extensions/FlickrExport.dll
 %_libdir/%name/extensions/FolderExport.dll
 %_libdir/%name/extensions/GalleryExport.dll
+%_libdir/%name/extensions/HashJob.dll
 %_libdir/%name/extensions/MergeDb.dll
 %_libdir/%name/extensions/PicasaWebExport.dll
 %_libdir/%name/extensions/RawPlusJpeg.dll
