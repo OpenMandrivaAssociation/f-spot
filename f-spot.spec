@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.5.0.3
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -90,7 +90,7 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %patch1 -p1 -b .sqlite3-update
 %patch2 -p1 -b .deprecated
 %patch3 -p1 -b .multiplefile
-%patch4 -p1
+%patch4 -p1 -b .import
 %patch5
 %if %{mdkversion} >= 200900
 %patch6 -p1 -b .gnome-keyring-sharp
