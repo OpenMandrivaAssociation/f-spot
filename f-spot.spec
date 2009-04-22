@@ -8,7 +8,7 @@ Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
-Patch1:		f-spot-0.4.2-sqlite3-update.patch
+Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
 Patch2:		f-spot-0.4.4-deprecated.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
 # gw fix camera selection dialog showing three instead of one camera
@@ -19,9 +19,11 @@ Patch4: f-spot-0.5.0.2-fix-bogus-camera-selection-dialog.patch
 # http://bugzilla.gnome.org/show_bug.cgi?id=556395
 Patch5: f-spot-0.5.0.2-no-image-in-collection-crash-fix.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
-Patch6:		f-spot-0.4.4-gnome-keyring-sharp.patch
+Patch6:		f-spot-0.5.0.3-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
 Patch7:		f-spot-0.4.4-fixunderlinking.patch
+# (fc) 0.5.0.3-3mdv fix string format error
+Patch8:		f-spot-0.5.0.3-str_fmt.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -96,6 +98,7 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %patch6 -p1 -b .gnome-keyring-sharp
 %endif
 %patch7 -p1 -b .fixunderlinking
+%patch8 -p1 -b .str_fmt
 
 intltoolize --force
 libtoolize --copy --force
