@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.5.0.3
-%define release	%mkrel 3
+%define version	0.6.0.0
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -9,19 +9,11 @@ Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
-Patch2:		f-spot-0.4.4-deprecated.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
-# gw fix camera selection dialog showing three instead of one camera
-# http://bugzilla.gnome.org/show_bug.cgi?id=551803
-Patch4: f-spot-0.5.0.2-fix-bogus-camera-selection-dialog.patch
-# gw from this upstream bug, fix crash when clicking on edit with no image
-# in the collection
-# http://bugzilla.gnome.org/show_bug.cgi?id=556395
-Patch5: f-spot-0.5.0.2-no-image-in-collection-crash-fix.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
-Patch6:		f-spot-0.5.0.3-gnome-keyring-sharp.patch
+Patch6:		f-spot-0.6.0.0-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
-Patch7:		f-spot-0.4.4-fixunderlinking.patch
+Patch7:		f-spot-0.6.0.0-fixunderlinking.patch
 # (fc) 0.5.0.3-3mdv fix string format error
 Patch8:		f-spot-0.5.0.3-str_fmt.patch
 License:	GPLv2+
@@ -36,10 +28,10 @@ BuildRequires:  gnome-keyring-sharp
 BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	gnome-desktop-sharp
 %endif
+BuildRequires:  libGConf2-devel
 BuildRequires:	beagle
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
-BuildRequires:	libgnomeui2-devel
 BuildRequires:	libexif-devel
 BuildRequires:	lcms-devel
 BuildRequires:	sqlite-devel
@@ -90,15 +82,14 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 %setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
-%patch2 -p1 -b .deprecated
+cd lib
+%patch8 -p1 -b .str_fmt
+cd ..
 %patch3 -p1 -b .multiplefile
-%patch4 -p1 -b .import
-%patch5
 %if %{mdkversion} >= 200900
 %patch6 -p1 -b .gnome-keyring-sharp
 %endif
 %patch7 -p1 -b .fixunderlinking
-%patch8 -p1 -b .str_fmt
 
 intltoolize --force
 libtoolize --copy --force
@@ -178,7 +169,6 @@ rm -rf %{buildroot}
 %dir %_datadir/omf/*/
 %_datadir/omf/*/*-C.omf
 %_libdir/pkgconfig/*.pc
-%_libdir/gio-sharp-unstable
 %_datadir/f-spot
 %_iconsdir/hicolor/*/*/*
 
