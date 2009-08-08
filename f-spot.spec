@@ -29,6 +29,7 @@ BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	gnome-desktop-sharp
 %endif
 BuildRequires:  libGConf2-devel
+BuildRequires:  libgnomeui2-devel
 BuildRequires:	beagle
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
