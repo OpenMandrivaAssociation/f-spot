@@ -97,7 +97,7 @@ libtoolize --copy --force
 autoreconf
 
 %build
-%configure2_5x --disable-nunit \
+%configure2_5x \
 	--disable-scrollkeeper \
 	--disable-static
 #parallel build is broken
@@ -113,6 +113,9 @@ rm -f %buildroot%_libdir/%name/libfspot*a
 for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
 echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
 done
+
+%check
+make check
 
 %clean
 rm -rf %{buildroot}
