@@ -1,5 +1,5 @@
 %define name 	f-spot
-%define version	0.6.1.0
+%define version	0.6.1.1
 %define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
@@ -7,9 +7,6 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-#gw issing in the tarball
-# http://bugzilla.gnome.org/show_bug.cgi?id=593104
-Source1:	fspot-0.6.1.0-missing.test.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
@@ -83,7 +80,7 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 
 
 %prep
-%setup -q -a 1
+%setup -q
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
 cd lib
