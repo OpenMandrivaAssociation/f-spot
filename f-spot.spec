@@ -1,12 +1,15 @@
 %define name 	f-spot
-%define version	0.6.0.0
-%define release	%mkrel 2
+%define version	0.6.1.0
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
+#gw issing in the tarball
+# http://bugzilla.gnome.org/show_bug.cgi?id=593104
+Source1:	fspot-0.6.1.0-missing.test.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
 Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
@@ -80,7 +83,7 @@ This F-Spot extension improves the photo indexing by the beagle desktop search.
 
 
 %prep
-%setup -q
+%setup -q -a 1
 %patch -p1 -b .dllmap
 %patch1 -p1 -b .sqlite3-update
 cd lib
@@ -152,6 +155,7 @@ rm -rf %{buildroot}
 %dir %_libdir/%name/extensions
 %_libdir/%name/extensions/CDExport.dll
 %_libdir/%name/extensions/ChangePhotoPath.dll
+%_libdir/%name/extensions/CoverTransition.dll
 %_libdir/%name/extensions/DBusService.dll
 %_libdir/%name/extensions/DefaultExporters.addin.xml
 %_libdir/%name/extensions/DevelopInUFRaw.dll
@@ -163,6 +167,7 @@ rm -rf %{buildroot}
 %_libdir/%name/extensions/MergeDb.dll
 %_libdir/%name/extensions/PicasaWebExport.dll
 %_libdir/%name/extensions/RawPlusJpeg.dll
+%_libdir/%name/extensions/ScreensaverConfig.dll
 %_libdir/%name/extensions/SmugMugExport.dll
 %_libdir/%name/extensions/TabbloExport.dll
 %_libdir/%name/extensions/ZipExport.dll
