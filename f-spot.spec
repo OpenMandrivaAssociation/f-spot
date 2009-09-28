@@ -1,5 +1,5 @@
 %define name 	f-spot
-%define version	0.6.1.2
+%define version	0.6.1.3
 %define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
@@ -9,7 +9,7 @@ Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
-Patch3: f-spot-0.4.2-no-multiple-files-in-viewer.patch
+Patch3: f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
 Patch6:		f-spot-0.6.0.0-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
