@@ -37,7 +37,7 @@ BuildRequires:	libexif-devel
 BuildRequires:	lcms-devel
 BuildRequires:	sqlite-devel
 BuildRequires:	libgphoto-devel
-BuildRequires:	libunique-devel
+BuildRequires:	unique-devel
 BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
