@@ -1,6 +1,6 @@
 %define name 	f-spot
-%define version	0.6.1.5
-%define release	%mkrel 2
+%define version	0.6.2
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -11,7 +11,7 @@ Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
 Patch3: f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
 # (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
-Patch6:		f-spot-0.6.0.0-gnome-keyring-sharp.patch
+Patch6:		f-spot-0.6.2-gnome-keyring-sharp.patch
 # (fc) 0.4.4-4mdv fix underlinking (Debian)
 Patch7:		f-spot-0.6.0.0-fixunderlinking.patch
 # (fc) 0.5.0.3-3mdv fix string format error
@@ -30,13 +30,14 @@ BuildRequires:	gnome-desktop-sharp
 %endif
 BuildRequires:  libGConf2-devel
 BuildRequires:  libgnomeui2-devel
-BuildRequires:	beagle
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
+BuildRequires:	mono-addins
 BuildRequires:	libexif-devel
 BuildRequires:	lcms-devel
 BuildRequires:	sqlite-devel
 BuildRequires:	libgphoto-devel
+BuildRequires:	libunique-devel
 BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
@@ -54,7 +55,7 @@ Requires:	%mklibname gphoto 2
 Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
 #gw workaround for urpmi bug 29356
-%define _provides_exceptions mono.libgphoto2-sharp\\|mono.Mono.Addins\\|mono.gnome-keyring-sharp
+%define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -68,16 +69,6 @@ Features:
 * Tag icon editor
 * Create photo cd
 * Export to web
-
-%package beagle
-Summary: Beagle notifyer for F-Spot
-Group: Graphics
-Requires: beagle
-Requires: %name = %version
-
-%description beagle
-This F-Spot extension improves the photo indexing by the beagle desktop search.
-
 
 %prep
 %setup -q
@@ -94,7 +85,9 @@ cd ..
 
 intltoolize --force
 libtoolize --copy --force
-autoreconf
+aclocal -I build/m4/shamrock -I build/m4/shave
+autoconf
+automake
 
 %build
 %configure2_5x \
@@ -107,7 +100,7 @@ make
 rm -rf %{buildroot} %name.lang
 %makeinstall_std
 
-rm -f %buildroot%_libdir/%name/libfspot*a
+rm -f %buildroot%_libdir/%name/lib*a
 
 %find_lang %name --with-gnome
 for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
@@ -120,25 +113,13 @@ make check
 %clean
 rm -rf %{buildroot}
 
-%if %mdkversion < 200900
-%post
-%update_menus
-%update_icon_cache hicolor
-%update_scrollkeeper
-%update_desktop_database
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%clean_icon_cache hicolor
-%clean_scrollkeeper
-%clean_desktop_database
-%endif
+%preun
+%preun_uninstall_gconf_schemas %name
 
 %files -f %name.lang
 %defattr(-,root,root)
 %doc AUTHORS MAINTAINERS NEWS README TODO
+%_sysconfdir/gconf/schemas/f-spot.schemas
 %_bindir/%name
 %_bindir/%name-import
 %_bindir/%name-sqlite-upgrade
@@ -154,16 +135,17 @@ rm -rf %{buildroot}
 %_libdir/%name/extensions/ChangePhotoPath.dll
 %_libdir/%name/extensions/CoverTransition.dll
 %_libdir/%name/extensions/DBusService.dll
-%_libdir/%name/extensions/DefaultExporters.addin.xml
 %_libdir/%name/extensions/DevelopInUFRaw.dll
 %_libdir/%name/extensions/FacebookExport.dll
 %_libdir/%name/extensions/FlickrExport.dll
 %_libdir/%name/extensions/FolderExport.dll
 %_libdir/%name/extensions/GalleryExport.dll
 %_libdir/%name/extensions/HashJob.dll
+%_libdir/%name/extensions/LiveWebGallery.dll
 %_libdir/%name/extensions/MergeDb.dll
 %_libdir/%name/extensions/PicasaWebExport.dll
 %_libdir/%name/extensions/RawPlusJpeg.dll
+%_libdir/%name/extensions/RetroactiveRoll.dll
 %_libdir/%name/extensions/ScreensaverConfig.dll
 %_libdir/%name/extensions/SmugMugExport.dll
 %_libdir/%name/extensions/TabbloExport.dll
@@ -177,7 +159,3 @@ rm -rf %{buildroot}
 %_libdir/pkgconfig/*.pc
 %_datadir/f-spot
 %_iconsdir/hicolor/*/*/*
-
-%files beagle
-%defattr(-,root,root)
-%_libdir/%name/extensions/BeagleService.dll
