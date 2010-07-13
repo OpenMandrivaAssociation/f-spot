@@ -92,7 +92,8 @@ automake
 %build
 %configure2_5x \
 	--disable-scrollkeeper \
-	--disable-static
+	--disable-static \
+	--with-gnome-screensaver-privlibexecdir=%_libdir/gnome-screensaver
 #parallel build is broken
 make
 
