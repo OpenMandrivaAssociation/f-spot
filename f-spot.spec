@@ -32,7 +32,7 @@ BuildRequires:  libGConf2-devel
 BuildRequires:  libgnomeui2-devel
 BuildRequires:	mono-devel
 BuildRequires:	mono-data-sqlite
-BuildRequires:	mono-addins
+BuildRequires:	mono-addins-devel
 BuildRequires:	libexif-devel
 BuildRequires:	lcms-devel
 BuildRequires:	sqlite-devel
@@ -41,7 +41,7 @@ BuildRequires:	unique-devel
 BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
-BuildRequires:	ndesk-dbus-glib
+BuildRequires:	ndesk-dbus-glib-devel
 BuildRequires:  gnome-screensaver
 BuildRequires:  gettext-devel
 #gw this is needed for automatic mono deps
