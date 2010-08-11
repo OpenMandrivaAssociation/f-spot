@@ -1,21 +1,15 @@
 %define name 	f-spot
-%define version	0.6.2
-%define release	%mkrel 2
+%define version	0.7.2
+%define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-Patch:		f-spot-0.3.2-dllmap.patch
 Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
 Patch3: f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
-# (fc) 0.4.4-4mdv use system gnome-keyring-sharp (Debian)
-Patch6:		f-spot-0.6.2-gnome-keyring-sharp.patch
-# (fc) 0.4.4-4mdv fix underlinking (Debian)
-Patch7:		f-spot-0.6.0.0-fixunderlinking.patch
-# (fc) 0.5.0.3-3mdv fix string format error
-Patch8:		f-spot-0.5.0.3-str_fmt.patch
+Patch5: f-spot-0.7.2-fix-makefile.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
@@ -28,6 +22,7 @@ BuildRequires:  gnome-keyring-sharp
 BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	gnome-desktop-sharp
 %endif
+BuildRequires:  mono-flickrnet
 BuildRequires:  libGConf2-devel
 BuildRequires:  libgnomeui2-devel
 BuildRequires:	mono-devel
@@ -72,25 +67,22 @@ Features:
 
 %prep
 %setup -q
-%patch -p1 -b .dllmap
-%patch1 -p1 -b .sqlite3-update
-cd lib
-%patch8 -p1 -b .str_fmt
-cd ..
+cd src/Clients/MainApp/
+%patch1 -p2 -b .sqlite3-update
+cd ../../../data/desktop-files/
 %patch3 -p1 -b .multiplefile
-%if %{mdkversion} >= 200900
-%patch6 -p1 -b .gnome-keyring-sharp
-%endif
-%patch7 -p1 -b .fixunderlinking
+cd ../..
+%patch5 -p1
 
 intltoolize --force
 libtoolize --copy --force
-aclocal -I build/m4/shamrock -I build/m4/shave
+aclocal -I build/m4/shamrock -I build/m4/shave -I build/m4/f-spot
 autoconf
 automake
 
 %build
 %configure2_5x \
+	--disable-schemas-install \
 	--disable-scrollkeeper \
 	--disable-static \
 	--with-gnome-screensaver-privlibexecdir=%_libdir/gnome-screensaver
@@ -104,9 +96,9 @@ rm -rf %{buildroot} %name.lang
 rm -f %buildroot%_libdir/%name/{lib*a,gio-sharp*,gtk-sharp-beans*}
 
 %find_lang %name --with-gnome
-for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
-echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
-done
+#for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
+#echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
+#done
 
 %check
 make check
@@ -131,32 +123,39 @@ rm -rf %{buildroot}
 %_libdir/%name/*.exe*
 %_libdir/%name/lib*.so*
 %_libdir/%name/*.addins
-%dir %_libdir/%name/extensions
-%_libdir/%name/extensions/CDExport.dll
-%_libdir/%name/extensions/ChangePhotoPath.dll
-%_libdir/%name/extensions/CoverTransition.dll
-%_libdir/%name/extensions/DBusService.dll
-%_libdir/%name/extensions/DevelopInUFRaw.dll
-%_libdir/%name/extensions/FacebookExport.dll
-%_libdir/%name/extensions/FlickrExport.dll
-%_libdir/%name/extensions/FolderExport.dll
-%_libdir/%name/extensions/GalleryExport.dll
-%_libdir/%name/extensions/HashJob.dll
-%_libdir/%name/extensions/LiveWebGallery.dll
-%_libdir/%name/extensions/MergeDb.dll
-%_libdir/%name/extensions/PicasaWebExport.dll
-%_libdir/%name/extensions/RawPlusJpeg.dll
-%_libdir/%name/extensions/RetroactiveRoll.dll
-%_libdir/%name/extensions/ScreensaverConfig.dll
-%_libdir/%name/extensions/SmugMugExport.dll
-%_libdir/%name/extensions/TabbloExport.dll
-%_libdir/%name/extensions/ZipExport.dll
+%dir %_libdir/%name/Extensions
+%_libdir/%name/Extensions/FSpot.Editors.BWEditor.dll*
+%_libdir/%name/Extensions/FSpot.Editors.BlackoutEditor.dll*
+%_libdir/%name/Extensions/FSpot.Editors.FlipEditor.dll*
+%_libdir/%name/Extensions/FSpot.Editors.PixelateEditor.dll*
+%_libdir/%name/Extensions/FSpot.Editors.ResizeEditor.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.CD.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.CoverTransition.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.Facebook.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.Flickr.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.Folder.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.Gallery.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.PicasaWeb.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.SmugMug.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.Tabblo.dll*
+%_libdir/%name/Extensions/FSpot.Exporters.Zip.dll*
+%_libdir/%name/Extensions/FSpot.Tools.ChangePhotoPath.dll*
+%_libdir/%name/Extensions/FSpot.Tools.DevelopInUFRaw.dll*
+%_libdir/%name/Extensions/FSpot.Tools.HashJob.dll*
+%_libdir/%name/Extensions/FSpot.Tools.LiveWebGallery.dll*
+%_libdir/%name/Extensions/FSpot.Tools.MergeDb.dll*
+%_libdir/%name/Extensions/FSpot.Tools.RawPlusJpeg.dll*
+%_libdir/%name/Extensions/FSpot.Tools.RetroactiveRoll.dll*
+%_libdir/%name/Extensions/FSpot.Tools.ScreensaverConfig.dll*
+%_libdir/%name/Extensions/Mono.Google.dll*
+%_libdir/%name/Extensions/Mono.Tabblo.dll*
+%_libdir/%name/Extensions/SmugMugNet.dll*
 %_datadir/applications/%name.desktop
 %_datadir/applications/%name-import.desktop
 %_datadir/applications/%name-view.desktop
 %_datadir/applications/screensavers/f-spot-screensaver.desktop
-%dir %_datadir/omf/*/
-%_datadir/omf/*/*-C.omf
+#%dir %_datadir/omf/*/
+#%_datadir/omf/*/*-C.omf
 %_libdir/pkgconfig/*.pc
 %_datadir/f-spot
 %_iconsdir/hicolor/*/*/*
