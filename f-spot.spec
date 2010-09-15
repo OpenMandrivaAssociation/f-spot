@@ -1,5 +1,5 @@
 %define name 	f-spot
-%define version	0.7.3
+%define version	0.8.0
 %define release	%mkrel 1
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
@@ -139,7 +139,6 @@ rm -rf %{buildroot}
 %_libdir/%name/Extensions/FSpot.Exporters.Zip.dll*
 %_libdir/%name/Extensions/FSpot.Tools.ChangePhotoPath.dll*
 %_libdir/%name/Extensions/FSpot.Tools.DevelopInUFRaw.dll*
-%_libdir/%name/Extensions/FSpot.Tools.HashJob.dll*
 %_libdir/%name/Extensions/FSpot.Tools.LiveWebGallery.dll*
 %_libdir/%name/Extensions/FSpot.Tools.MergeDb.dll*
 %_libdir/%name/Extensions/FSpot.Tools.RawPlusJpeg.dll*
