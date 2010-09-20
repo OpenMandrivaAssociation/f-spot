@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.8.0
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -54,7 +54,7 @@ Requires:	%mklibname gphoto 2
 Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
 #gw workaround for urpmi bug 29356
-%define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp
+%define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp\\|mono.gtk-sharp-beans
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -96,7 +96,8 @@ make
 rm -rf %{buildroot} %name.lang
 %makeinstall_std
 
-rm -f %buildroot%_libdir/%name/{lib*a,gio-sharp*,gtk-sharp-beans*}
+rm -f %buildroot%_libdir/%name/{lib*a,gio-sharp*}
+#,gtk-sharp-beans*}
 
 %find_lang %name --with-gnome
 #for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
