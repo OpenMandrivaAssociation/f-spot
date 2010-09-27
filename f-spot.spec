@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.8.0
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -96,8 +96,8 @@ make
 rm -rf %{buildroot} %name.lang
 %makeinstall_std
 
-rm -f %buildroot%_libdir/%name/{lib*a,gio-sharp*}
-#,gtk-sharp-beans*}
+rm -f %buildroot%_libdir/%name/lib*a
+#,gio-sharp*,gtk-sharp-beans*}
 
 %find_lang %name --with-gnome
 #for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
