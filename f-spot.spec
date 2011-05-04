@@ -7,7 +7,6 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-Patch1:		f-spot-0.5.0.3-sqlite3-update.patch
 Patch3: f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
 #https://bugzilla.gnome.org/show_bug.cgi?id=629224
 Patch5: f-spot-mono2.8.patch
@@ -24,10 +23,8 @@ BuildRequires:	gnome-sharp2 >= 2.8.0
 BuildRequires:	gnome-desktop-sharp
 %endif
 BuildRequires:  mono-flickrnet
-BuildRequires:  libGConf2-devel
 BuildRequires:  libgnomeui2-devel
 BuildRequires:	mono-devel
-BuildRequires:	mono-data-sqlite
 %if %mdvver >= 201100
 BuildRequires: mono-addins-devel
 BuildRequires: ndesk-dbus-glib-devel
@@ -37,26 +34,17 @@ BuildRequires: ndesk-dbus-glib
 %endif
 BuildRequires:	libexif-devel
 BuildRequires:	lcms-devel
-BuildRequires:	sqlite-devel
-BuildRequires:	libgphoto-devel
 BuildRequires:	unique-devel
 BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
 BuildRequires:  gnome-screensaver
 BuildRequires:  gettext-devel
-#gw this is needed for automatic mono deps
-BuildRequires:	libmesaglu-devel
 #gw required for the upgrade script
 Requires:	sqlite-tools
 Requires:	sqlite3-tools
-#gw please don't drop these explicit deps, the shared libraries are imported
-Requires:	%mklibname exif 12
-Requires:	%mklibname gphoto 2
 Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
-#gw workaround for urpmi bug 29356
-%define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp\\|mono.gtk-sharp-beans\\|mono.gio-sharp
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -73,9 +61,7 @@ Features:
 
 %prep
 %setup -q
-cd src/Clients/MainApp/
-%patch1 -p2 -b .sqlite3-update
-cd ../../../data/desktop-files/
+cd data/desktop-files/
 %patch3 -p1 -b .multiplefile
 cd ../..
 %patch5 -p1
