@@ -7,6 +7,7 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
+Patch0: f-spot-fix-linking.patch
 Patch3: f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
 #https://bugzilla.gnome.org/show_bug.cgi?id=629224
 Patch5: f-spot-mono2.8.patch
@@ -63,6 +64,7 @@ Features:
 
 %prep
 %setup -q
+%patch0 -p1
 cd data/desktop-files/
 %patch3 -p1 -b .multiplefile
 cd ../..
