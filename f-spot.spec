@@ -8,7 +8,7 @@
 %define subrel 1
 %define release %mkrel 3
 %endif
-9   
+   
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
 Version:	%{version}
