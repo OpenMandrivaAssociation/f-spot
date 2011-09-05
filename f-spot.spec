@@ -1,7 +1,14 @@
 %define name 	f-spot
 %define version	0.8.2
-%define release	%mkrel 4
-
+%if %mandriva_branch == Cooker
+# Cooker
+%define release %mkrel 4
+%else
+# Old distros
+%define subrel 1
+%define release %mkrel 3
+%endif
+9   
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
 Version:	%{version}
