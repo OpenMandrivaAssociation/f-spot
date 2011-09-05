@@ -1,6 +1,6 @@
 %define name 	f-spot
 %define version	0.8.2
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		%{name}
@@ -46,6 +46,8 @@ Requires:	sqlite3-tools
 Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+#gw workaround for urpmi bug 29356
+%define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp\\|mono.gtk-sharp-beans\\|mono.gio-sharp
 
 %description
 F-Spot is a full-featured personal photo management application
