@@ -76,11 +76,11 @@ cd data/desktop-files/
 %patch3 -p1 -b .multiplefile
 cd ../..
 %patch5 -p1
-#intltoolize --force
-#libtoolize --copy --force
-#aclocal -I build/m4/shamrock -I build/m4/shave -I build/m4/f-spot
-#autoconf
-#automake
+intltoolize --force
+libtoolize --copy --force
+aclocal -I build/m4/shamrock -I build/m4/shave -I build/m4/f-spot
+autoconf
+automake
 
 %build
 %configure2_5x \
