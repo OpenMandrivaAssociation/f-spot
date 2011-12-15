@@ -41,6 +41,7 @@ BuildRequires: mono-addins
 BuildRequires: ndesk-dbus-glib
 %endif
 BuildRequires:	libexif-devel
+BuildRequires:	libjpeg-devel
 BuildRequires:	lcms-devel
 BuildRequires:	unique-devel
 BuildRequires:	scrollkeeper
