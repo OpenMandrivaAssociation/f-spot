@@ -1,0 +1,11 @@
+--- f-spot-0.8.2/lib/libfspot/Makefile.am.linking	2011-09-05 21:00:27.000000000 +0200
++++ f-spot-0.8.2/lib/libfspot/Makefile.am	2011-09-05 21:00:42.000000000 +0200
+@@ -23,7 +23,7 @@ libfspot_la_SOURCES =				\
+ 	f-screen-utils.c
+ 
+ libfspot_la_LIBADD = 					\
+-	-lX11						\
++	-lX11 -lm					\
+ 	$(F_LIBS)					\
+ 	$(LCMS_LIBS)					\
+ 	$(GIO_LIBS)
