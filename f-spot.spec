@@ -1,49 +1,31 @@
-%define name 	f-spot
-%define version	0.8.2
-%if %mandriva_branch == Cooker
-# Cooker
-%define release %mkrel 5
-%else
-# Old distros
-%define subrel 1
-%define release %mkrel 3
-%endif
-   
+#gw workaround for urpmi bug 29356
+#define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp\\|mono.gtk-sharp-beans\\|mono.gio-sharp
+
 Summary:	A full-featured personal photo management application for the GNOME desktop
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		f-spot
+Version:	0.8.2
+Release:	4.1
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-Patch0: f-spot-fix-linking.patch
-Patch3: f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
+Patch0:		f-spot-fix-linking.patch
+Patch3: 	f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
 #https://bugzilla.gnome.org/show_bug.cgi?id=629224
-Patch5: f-spot-mono2.8.patch
+Patch5: 	f-spot-mono2.8.patch
 License:	GPLv2+
 Group: 		Graphics
 Url:		http://f-spot.org
-BuildRequires:  intltool
-%if %mdvver >= 200900
-BuildRequires:	gnome-sharp2-devel >= 2.8.0
-BuildRequires:	gnome-desktop-sharp-devel
+BuildRequires:	intltool
+BuildRequires:	pkgconfig(gnome-sharp-2.0)
+BuildRequires:	pkgconfig(gnome-desktop-sharp-2.0)
 BuildRequires:  gnome-keyring-sharp
-%else
-BuildRequires:	gnome-sharp2 >= 2.8.0
-BuildRequires:	gnome-desktop-sharp
-%endif
 BuildRequires:  mono-flickrnet
-BuildRequires:  libgnomeui2-devel
+BuildRequires:  pkgconfig(libgnomeui-2.0)
 BuildRequires:	mono-devel
-%if %mdvver >= 201100
-BuildRequires: mono-addins-devel
-BuildRequires: ndesk-dbus-glib-devel
-%else
-BuildRequires: mono-addins
-BuildRequires: ndesk-dbus-glib
-%endif
-BuildRequires:	libexif-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	lcms-devel
-BuildRequires:	unique-devel
+BuildRequires:	mono-addins-devel
+BuildRequires:	ndesk-dbus-glib-devel
+BuildRequires:	pkgconfig(libexif)
+BuildRequires:	pkgconfig(lcms)
+BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(unique-1.0)
 BuildRequires:	scrollkeeper
 BuildRequires:	gnome-doc-utils
 BuildRequires:	libxslt-proc
@@ -54,9 +36,6 @@ Requires:	sqlite-tools
 Requires:	sqlite3-tools
 Requires(post): shared-mime-info scrollkeeper
 Requires(postun): shared-mime-info scrollkeeper
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-#gw workaround for urpmi bug 29356
-%define _provides_exceptions mono.libgphoto2-sharp\\|mono.gnome-keyring-sharp\\|mono.gtk-sharp-beans\\|mono.gio-sharp
 
 %description
 F-Spot is a full-featured personal photo management application
@@ -77,11 +56,11 @@ cd data/desktop-files/
 %patch3 -p1 -b .multiplefile
 cd ../..
 %patch5 -p1
-intltoolize --force
-libtoolize --copy --force
-aclocal -I build/m4/shamrock -I build/m4/shave -I build/m4/f-spot
-autoconf
-automake
+#intltoolize --force
+#libtoolize --copy --force
+#aclocal -I build/m4/shamrock -I build/m4/shave -I build/m4/f-spot
+#autoconf
+#automake
 
 %build
 %configure2_5x \
@@ -90,31 +69,23 @@ automake
 	--disable-static \
 	--with-gnome-screensaver-privlibexecdir=%_libdir/gnome-screensaver
 #parallel build is broken
-make
+make LIBS="-lm"
 
 %install
-rm -rf %{buildroot} %name.lang
 %makeinstall_std
 
 rm -f %buildroot%_libdir/%name/lib*a
 #,gio-sharp*,gtk-sharp-beans*}
 
-%find_lang %name --with-gnome
-#for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
-#echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
-#done
+%find_lang %{name} --with-gnome
 
 %check
 make check
-
-%clean
-rm -rf %{buildroot}
 
 %preun
 %preun_uninstall_gconf_schemas %name
 
 %files -f %name.lang
-%defattr(-,root,root)
 %doc AUTHORS MAINTAINERS NEWS README TODO
 %_sysconfdir/gconf/schemas/f-spot.schemas
 %_bindir/%name
@@ -157,8 +128,6 @@ rm -rf %{buildroot}
 %_datadir/applications/%name-import.desktop
 %_datadir/applications/%name-view.desktop
 %_datadir/applications/screensavers/f-spot-screensaver.desktop
-#%dir %_datadir/omf/*/
-#%_datadir/omf/*/*-C.omf
 %_libdir/pkgconfig/*.pc
 %_datadir/f-spot
 %_iconsdir/hicolor/*/*/*
