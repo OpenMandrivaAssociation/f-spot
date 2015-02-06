@@ -4,7 +4,7 @@
 Summary:	A full-featured personal photo management application for the GNOME desktop
 Name:		f-spot
 Version:	0.8.2
-Release:	4.1
+Release:	4.2
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Patch0:		f-spot-fix-linking.patch
 Patch3: 	f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
