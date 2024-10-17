@@ -12,7 +12,7 @@ Patch3: 	f-spot-0.6.1.3-no-multiple-files-in-viewer.patch
 Patch5: 	f-spot-mono2.8.patch
 License:	GPLv2+
 Group: 		Graphics
-Url:		http://f-spot.org
+Url:		https://f-spot.org
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(gnome-sharp-2.0)
 BuildRequires:	pkgconfig(gnome-desktop-sharp-2.0)
